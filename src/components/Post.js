@@ -16,7 +16,9 @@ function Post() {
             Heading lorem10
           </h2>
           <div className="auth mt-2 text-xs flex justify-end text-zinc-700 mb-2">
-            <p className="info inline mr-4 text-black font-boldcla">Author Name</p>
+            <p className="info inline mr-4 text-black font-boldcla">
+              Author Name
+            </p>
             <time>19-12-2023</time>
           </div>
 
