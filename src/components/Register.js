@@ -9,21 +9,24 @@ const Register = () => {
   //   // Function to handle form submission
   const handleRegister =async(e) => {
       e.preventDefault();
-      await fetch("http://localhost:4000/register", {
+      const userReg = await fetch("http://localhost:4000/api/v1/register", {
           method: 'Post',
           body:JSON.stringify({username, password}),
           headers: { 'Content-Type': 'application/json' },
 
       })
+    console.log(userReg);
       
 
     // Validate login (you might want to perform actual authentication here)
-    if (username && password) {
+    
+
+    if ((username && password)&& userReg.ok) {
         alert(`Logged in with username: ${username}`);
         
       // You can perform additional logic here, such as making an API request for authentication
     } else {
-      alert("Please enter a username and password.");
+      alert("Username taken or invalid");
     }
   };
 
