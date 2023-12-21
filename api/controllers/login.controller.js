@@ -10,7 +10,7 @@ const login = async (req, res) => {
   try {
     const { username, password } = req.body;
     const user = await User.findOne({ username });
-    console.log(bycrypt.compareSync(password, user.password));
+    // console.log(bycrypt.compareSync(password, user.password));
     if (user) {
       if (bycrypt.compareSync(password, user.password)) {
         //login
