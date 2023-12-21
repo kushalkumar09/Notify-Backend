@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+import { Navigate } from "react-router";
 // import Post from "./Post";
 
 const Register = () => {
   // Local state to manage form inputs
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [redirect, setRedirect] = useState(false);
 
   //   // Function to handle form submission
   const handleRegister =async(e) => {
@@ -21,14 +23,21 @@ const Register = () => {
     // Validate login (you might want to perform actual authentication here)
     
 
-    if ((username && password)&& userReg.ok) {
-        alert(`Logged in with username: ${username}`);
+    if ((username && password) && userReg.ok) {
+        setRedirect(true);
+        alert(`registration successful`);
         
       // You can perform additional logic here, such as making an API request for authentication
     } else {
       alert("Username taken or invalid");
     }
   };
+
+  if (redirect) {
+    return (
+        <Navigate to="/"/>
+    )
+  }
 
   return (
     <div className="w-full md:h-fit h-screeen flex justify-center p-10">
