@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const dbConnect = require("../api/db.js");
+const cookieParser = require("cookie-parser");
 // const createUser = require("./controllers/user.controller.js");
 // const login = require("./controllers/login.controller.js");
 // // const User = require("../api/models/user.model.js")
@@ -9,6 +10,7 @@ const dbConnect = require("../api/db.js");
 require("dotenv").config();
 //middleware
 app.use(express.json());
+app.use(cookieParser());
 app.use(cors({credentials:true, origin: "http://localhost:3000"}));
 
 const PORT = process.env.PORT || 4000;
