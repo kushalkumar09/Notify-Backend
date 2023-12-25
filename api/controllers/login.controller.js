@@ -48,4 +48,9 @@ const profile = (req, res) => {
   // res.json(req.cookies);
 };
 
-module.exports = {login, profile};
+//logout
+const logout = (req, res) => { 
+  res.cookie('token', '').json('ok');
+
+}
+module.exports = {login, profile, logout};
