@@ -15,6 +15,14 @@ const Header = () => {
     });
   }, []);
 
+  function logout() {
+    fetch("http://localhost:4000/api/v1/logout", {
+      credentials: "include",
+      method: "POST",
+    });
+    setUsername(null);
+  }
+
   return (
     <header className="header md:px-20">
       <div className="logo-container md:ml-6">
@@ -40,7 +48,7 @@ const Header = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/logout" className="nav-link">
+                <Link to="/logout" className="nav-link" onClick={logout}>
                   LogOut
                 </Link>
               </li>

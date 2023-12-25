@@ -1,9 +1,9 @@
-import { Outlet } from "react-router";
+import { Outlet} from "react-router";
 import Header from "./Nav";
 
 export default function Layout() {
     return (
-      <main>
+      <main>        
         <Header />
             <br></br>            
         <Outlet/>
