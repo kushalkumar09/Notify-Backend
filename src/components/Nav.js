@@ -1,12 +1,12 @@
 // Header.js
 
 import React, { useEffect, useContext } from "react";
-import {UserContext}  from "./UserContext";
+import { UserContext } from "./UserContext";
 import { Link } from "react-router-dom";
 
 const Header = () => {
   // const [username, setUsername] = useState(null);
-  const {setUserInfo,userInfo} = useContext(UserContext);
+  const { setUserInfo, userInfo } = useContext(UserContext);
   useEffect(() => {
     fetch("http://localhost:4000/api/v1/profile", {
       credentials: "include",
@@ -52,7 +52,7 @@ const Header = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/logout " className="nav-link" onClick={logout}>
+                <Link to="/" className="nav-link" onClick={logout}>
                   LogOut
                 </Link>
               </li>

@@ -3,7 +3,7 @@ import Header from "./Nav";
 
 export default function Layout() {
     return (
-      <main>        
+      <main className="flex flex-col">        
         <Header />
             <br></br>            
         <Outlet/>
