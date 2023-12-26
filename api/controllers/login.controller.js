@@ -4,7 +4,6 @@ const jwt = require("jsonwebtoken");
 
 const secret = "lkdjfah807jdlfk89hjkdsjfb";
 
-
 const login = async (req, res) => {
   console.log(req.body);
   try {
@@ -16,9 +15,11 @@ const login = async (req, res) => {
         //login
         jwt.sign({ username, id: user._id }, secret, {}, (err, token) => {
           if (err) throw err;
-          res.cookie("token", token).json("user Login");
-          
-        })
+          res.cookie("token", token).json({
+            id: user._id,
+            username,
+          });
+        });
       } else {
         res.status(401).json({
           success: false,
@@ -49,8 +50,7 @@ const profile = (req, res) => {
 };
 
 //logout
-const logout = (req, res) => { 
-  res.cookie('token', '').json('ok');
-
-}
-module.exports = {login, profile, logout};
+const logout = (req, res) => {
+  res.cookie("token", "").json("ok");
+};
+module.exports = { login, profile, logout };
