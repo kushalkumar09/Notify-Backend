@@ -9,23 +9,19 @@ import Layout from "./components/Layout";
 import IndexPages from "./components/Pages";
 import Login from "./components/Login";
 import Register from "./components/Register";
+import {UserContextProvider} from "./components/UserContext";
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Layout />}>
-        <Route
-          index element={
-            <IndexPages/>       
-          }
-        />
-          <Route path="/login" element={<Login/>} />
-        <Route path="/register" element={<Register/>} />
-
-      </Route>
-    
-      
-    </Routes>
+    <UserContextProvider>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<IndexPages />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+        </Route>
+      </Routes>
+    </UserContextProvider>
   );
 }
 

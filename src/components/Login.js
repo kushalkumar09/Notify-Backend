@@ -1,11 +1,13 @@
-import React, { useState } from "react";
-import {Navigate} from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { Navigate } from "react-router-dom";
+import { UserContext } from "./UserContext";
 
 const Login = () => {
   // Local state to manage form inputs
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const[redirect, setRedirect] = useState(false);
+  const [redirect, setRedirect] = useState(false);
+  const {setUserInfo} = useContext(UserContext);
 
   // Function to handle form submission
   const handleLogin = async (e) => {
@@ -20,7 +22,10 @@ const Login = () => {
       });
 
       if (response.ok) {
-        setRedirect(true);
+        response.json().then(userInfo => {
+          setUserInfo(userInfo);
+          setRedirect(true);
+        })
       }
       else {
         alert("Invalid username or password");

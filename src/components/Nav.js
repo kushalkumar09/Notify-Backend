@@ -1,33 +1,37 @@
 // Header.js
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useContext } from "react";
+import {UserContext}  from "./UserContext";
 import { Link } from "react-router-dom";
 
 const Header = () => {
-  const [username, setUsername] = useState(null);
+  // const [username, setUsername] = useState(null);
+  const {setUserInfo,userInfo} = useContext(UserContext);
   useEffect(() => {
     fetch("http://localhost:4000/api/v1/profile", {
       credentials: "include",
     }).then((response) => {
       response.json().then((userInfo) => {
-        setUsername(userInfo.username);
+        setUserInfo(userInfo);
       });
     });
-  }, []);
+  }, [setUserInfo, userInfo]);
 
   function logout() {
     fetch("http://localhost:4000/api/v1/logout", {
       credentials: "include",
       method: "POST",
     });
-    setUsername(null);
+    setUserInfo(null);
   }
+
+  const username = userInfo?.username;
 
   return (
     <header className="header md:px-20">
       <div className="logo-container md:ml-6">
         {/* <Logo /> */}
-        <Link to="/">Logo</Link>
+        <Link to="/">Notify</Link>
       </div>
       <nav>
         {username ? (
@@ -48,7 +52,7 @@ const Header = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/logout" className="nav-link" onClick={logout}>
+                <Link to="/logout " className="nav-link" onClick={logout}>
                   LogOut
                 </Link>
               </li>
