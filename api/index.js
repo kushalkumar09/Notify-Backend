@@ -11,7 +11,7 @@ require("dotenv").config();
 //middleware
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({credentials:true, origin: "http://localhost:3000"}));
+app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 
 const PORT = process.env.PORT || 4000;
 
@@ -19,7 +19,7 @@ const PORT = process.env.PORT || 4000;
 dbConnect();
 
 //mount routes
-app.use("/api/v1", require("./routes/route.js"))
+app.use("/api/v1", require("./routes/route.js"));
 
 // app.use("/api/v1/createuser", createUser);
 // app.post('/login', async (req, res) => {
@@ -28,6 +28,6 @@ app.use("/api/v1", require("./routes/route.js"))
 //   res.json(user);
 // })
 
-  app.listen(4000, () => {
-    console.log(`listening on http://localhost:${PORT}`);
-  });
+app.listen(4000, () => {
+  console.log(`listening on http://localhost:${PORT}`);
+});
