@@ -6,6 +6,7 @@ export default function Createpost() {
   const [title, setTitle] = useState("");
   const [summary, setSummary] = useState("");
   const [content, setContent] = useState(""); // Corrected the state variable name
+  const [files,setFiles] = useState("");
 
   const modules = {
     toolbar: [
@@ -25,12 +26,12 @@ export default function Createpost() {
     ],
   };
 
-    const formats = [
-        'header',
-        'bold', 'italic', 'underline', 'strike', 'blackquoute',
-        'list', 'bullet', 'indent',
-        'link', 'image'           
-  ];
+  //   const formats = [
+  //       'header',
+  //       'bold', 'italic', 'underline', 'strike', 'blackquoute',
+  //       'list', 'bullet', 'indent',
+  //       'link', 'image'           
+  // ];
 
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
@@ -40,13 +41,27 @@ export default function Createpost() {
     setSummary(e.target.value);
   };
 
+  const handlefiles = (e) => { 
+    setFiles(e.target.files);
+  }
+
   const handleContentChange = (value) => {
     setContent(value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
+    const data = new FormData();
+    data.set('title',title);
+    data.set('summary',summary);
+    data.set('content',content);
+    data.set('file',files[0]);
     e.preventDefault();
+    console.log(files);
     // Add logic to handle form submission
+    const response =  await fetch("http://localhost:4000/api/v1/post", {
+      method: 'POST',
+      body:data,
+    });
   };
 
   return (
@@ -72,13 +87,17 @@ export default function Createpost() {
           onChange={handleSummaryChange}
         />
         <br />
-        <input className="w-1/2 mt-5" type="file" />
+        <input
+          onChange={handlefiles}
+          className="w-1/2 mt-5"
+          type="file"
+        />
         <ReactQuill
           className="w-full h-fit mt-5"
           value={content}
           onChange={handleContentChange}
           modules={modules}
-          formats={formats}
+          // formats={formats}
         />
         <button
           className="bg-zinc-800 text-cyan-50 w-full mt-5 p-1 rounded-md"

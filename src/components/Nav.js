@@ -15,7 +15,7 @@ const Header = () => {
         setUserInfo(userInfo);
       });
     });
-  }, [setUserInfo, userInfo]);
+  }, []);
 
   function logout() {
     fetch("http://localhost:4000/api/v1/logout", {
