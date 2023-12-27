@@ -40,17 +40,20 @@ const login = async (req, res) => {
     });
   }
 };
-const profile = (req, res) => {
-  const { token } = req.cookies;
-  jwt.verify(token, secret, {}, (err, info) => {
-    if (err) throw err;
+const profile = async (req, res) => {
+  try {
+    const { token } = req.cookies;
+    const info = await jwt.verify(token, secret, {});
     res.json(info);
-  });
-  // res.json(req.cookies);
+  } catch (error) {
+    console.error(error);
+    res.status(401).json({ error: "Unauthorized" });
+  }
 };
 
+
 //logout
-const logout = (req, res) => {
+const logout = async(req, res) => {
   res.cookie("token", "").json("ok");
 };
 module.exports = { login, profile, logout };
