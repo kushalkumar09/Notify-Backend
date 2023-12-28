@@ -74,7 +74,7 @@ const Login = () => {
         <br />
         <button
           type="submit"
-          className="flex mb-3 items-center justify-center font-medium bg-violet-700 text-white h-9 rounded-md hover:bg-violet-800 transition-all duration-300"
+          className="flex mb-3 items-center justify-center font-medium bg-slate-700 text-white h-9 rounded-md hover:bg-slate-800 transition-all duration-300"
         >
           Login
         </button>
