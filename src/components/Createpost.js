@@ -1,12 +1,14 @@
 import { useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { Navigate } from "react-router";
 
 export default function Createpost() {
   const [title, setTitle] = useState("");
   const [summary, setSummary] = useState("");
   const [content, setContent] = useState(""); // Corrected the state variable name
-  const [files,setFiles] = useState("");
+  const [files, setFiles] = useState("");
+  const [redirect, setRedirect] = useState(false);
 
   const modules = {
     toolbar: [
@@ -60,9 +62,18 @@ export default function Createpost() {
     // Add logic to handle form submission
     const response =  await fetch("http://localhost:4000/api/v1/post", {
       method: 'POST',
-      body:data,
+      body: data,
+      credentials: 'include',
     });
+    if (response.ok) {
+      alert('post created successfully');
+      setRedirect(true);
+    }
   };
+
+  if (redirect) {
+    return <Navigate to={'/'}/>
+  }
 
   return (
     <>
