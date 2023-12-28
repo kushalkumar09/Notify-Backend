@@ -1,5 +1,7 @@
 const Post = require("../models/post.model");
 const fs = require("fs");
+const jwt = require("jsonwebtoken");
+const secret = "lkdjfah807jdlfk89hjkdsjfb";
 
 const creatingPost = async (req, res) => {
   try {
@@ -9,18 +11,26 @@ const creatingPost = async (req, res) => {
     const newPath = path + "." + extension;
     fs.renameSync(path, newPath);
 
-    const { title, summary, content } = req.body;
+    const { token } = req.cookies;
+    jwt.verify(token, secret, {}, async (err, info) => {
+      console.log(info);
+      if (err) throw err;
+      const { title, summary, content } = req.body;
+      const newPost = await Post.create({
+        title,
+        summary,
+        content,
+        cover: newPath,
+        author:info.id,
+      
+      });
 
-    // Create the post in the database
-    const newPost = await Post.create({
-      title,
-      summary,
-      content,
-      cover: newPath,
+      res.json(newPost);
     });
 
+    // Create the post in the database
+
     // Send the response to the client with the created post data
-    res.json(newPost);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
