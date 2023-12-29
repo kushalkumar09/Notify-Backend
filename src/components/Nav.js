@@ -28,7 +28,7 @@ const Header = () => {
   const username = userInfo?.username;
 
   return (
-    <header className="header md:px-6 py-4 bg-zinc-900">
+    <header className="header md:px-6 py-4 bg-zinc-900 fixed w-full top-0 z-50">
       <div className="container mx-auto flex items-center justify-between">
         <div className="logo-container ml-4">
           {/* <Logo /> */}
