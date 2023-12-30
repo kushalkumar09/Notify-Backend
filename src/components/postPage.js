@@ -1,20 +1,25 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useEffect, useState, useContext } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { format } from "date-fns";
+import { UserContext } from "./UserContext";
 
 export default function PostPage() {
   const [postInfo, setPostInfo] = useState(null);
   const { id } = useParams();
+  const { userInfo } = useContext(UserContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch(`http://localhost:4000/post/${id}`)
       .then((response) => {
+        console.log(response);
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
         return response.json();
       })
       .then((postInfo) => {
+        console.log(postInfo);
         setPostInfo(postInfo);
       })
       .catch((error) => {
@@ -32,20 +37,27 @@ export default function PostPage() {
   return (
     <>
       <div className="max-w-full md:max-w-5xl md:mx-auto md:mt-8 p-4 bg-white rounded md:shadow overflow-hidden">
-        <button className="bg-slate-500 text-white px-4 py-2 rounded-md flex items-center m-auto md:mr-0">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5 mr-2"
-            viewBox="0 0 20 20"
-            fill="currentColor"
+        {postInfo.author.username === userInfo.username ? (
+          <button
+            className="bg-slate-500 text-white px-4 py-2 rounded-md flex items-center m-auto md:mr-0"
+            onClick={()=>{navigate(`/edit/${postInfo._id}`)}}   
           >
-            <path
-              fillRule="evenodd"
-              d="M14.793 2.793a1 1 0 0 1 1.414 0l1 1a1 1 0 0 1 0 1.414L4.5 18.914a1 1 0 0 1-1.414 0l-1-1a1 1 0 0 1 0-1.414L14.793 2.793zM16 6L6 16H2v-4l10-10h4v4z"
-            />
-          </svg>
-          Edit Post
-        </button>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5 mr-2"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fillRule="evenodd"
+                d="M14.793 2.793a1 1 0 0 1 1.414 0l1 1a1 1 0 0 1 0 1.414L4.5 18.914a1 1 0 0 1-1.414 0l-1-1a1 1 0 0 1 0-1.414L14.793 2.793zM16 6L6 16H2v-4l10-10h4v4z"
+              />
+            </svg>
+            Edit Post
+          </button>
+        ) : (
+          ""
+        )}
 
         {/* Title and Author */}
         <div className="mb-6">
@@ -55,7 +67,10 @@ export default function PostPage() {
           <p className="text-gray-500 text-lg font-bold flex justify-center mt-2 pr-6 capitalize ">
             by {postInfo.author?.username || "Unknown Author"}
           </p>
-          <p className="text-gray-500 text-lg font-bold flex justify-center mt-2 pr-6 capitalize"> {format(new Date(postInfo.createdAt),"MM/dd/yyyy")}</p>
+          <p className="text-gray-500 text-lg font-bold flex justify-center mt-2 pr-6 capitalize">
+            {" "}
+            {format(new Date(postInfo.createdAt), "MM/dd/yyyy")}
+          </p>
         </div>
 
         {/* Image */}

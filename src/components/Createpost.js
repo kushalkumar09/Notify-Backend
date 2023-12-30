@@ -28,12 +28,7 @@ export default function Createpost() {
     ],
   };
 
-  //   const formats = [
-  //       'header',
-  //       'bold', 'italic', 'underline', 'strike', 'blackquoute',
-  //       'list', 'bullet', 'indent',
-  //       'link', 'image'           
-  // ];
+ 
 
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
