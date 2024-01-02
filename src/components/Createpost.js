@@ -28,8 +28,6 @@ export default function Createpost() {
     ],
   };
 
- 
-
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
   };
@@ -38,36 +36,36 @@ export default function Createpost() {
     setSummary(e.target.value);
   };
 
-  const handlefiles = (e) => { 
+  const handlefiles = (e) => {
     setFiles(e.target.files);
-  }
+  };
 
   const handleContentChange = (value) => {
     setContent(value);
   };
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     const data = new FormData();
-    data.set('title',title);
-    data.set('summary',summary);
-    data.set('content',content);
-    data.set('file',files[0]);
+    data.set("title", title);
+    data.set("summary", summary);
+    data.set("content", content);
+    data.set("file", files[0]);
     e.preventDefault();
     console.log(files);
     // Add logic to handle form submission
-    const response =  await fetch("http://localhost:4000/api/v1/post", {
-      method: 'POST',
+    const response = await fetch("http://localhost:4000/api/v1/post", {
+      method: "POST",
       body: data,
-      credentials: 'include',
+      credentials: "include",
     });
     if (response.ok) {
-      alert('post created successfully');
+      alert("post created successfully");
       setRedirect(true);
     }
   };
 
   if (redirect) {
-    return <Navigate to={'/'}/>
+    return <Navigate to={"/"} />;
   }
 
   return (
@@ -93,11 +91,7 @@ export default function Createpost() {
           onChange={handleSummaryChange}
         />
         <br />
-        <input
-          onChange={handlefiles}
-          className="w-1/2 mt-5"
-          type="file"
-        />
+        <input onChange={handlefiles} className="w-1/2 mt-5" type="file" />
         <ReactQuill
           className="w-full h-fit mt-5"
           value={content}

@@ -8,21 +8,21 @@ export default function EditPost() {
   const [title, setTitle] = useState("");
   const [summary, setSummary] = useState("");
   const [content, setContent] = useState("");
-  const [files, setFiles] = useState(null); // Use null for file state
+  const [files, setFiles] = useState("");
   const [redirect, setRedirect] = useState(false);
+  // const [cover, setCover] = useState("");
 
   useEffect(() => {
-    fetch(`http://localhost:4000/post/${id}`)
-      .then((response) => response.json())
-      .then((postInfo) => {
+    fetch(`http://localhost:4000/post/${id}`).then((response) => {
+      response.json().then((postInfo) => {
         setTitle(postInfo.title);
         setContent(postInfo.content);
         setSummary(postInfo.summary);
       });
+    });
   }, [id]);
 
   const modules = {
-    // ... your existing modules configuration
     toolbar: [
       ["bold", "italic", "underline", "strike"],
       ["blockquote", "code-block"],
@@ -48,17 +48,14 @@ export default function EditPost() {
     data.set("summary", summary);
     data.set("content", content);
     data.set("id", id);
-
-    if (files && files[0]) {
-      data.set("file", files[0]);
+    if (files?.[0]) {
+      data.set("file", files?.[0]);
     }
-
     const response = await fetch("http://localhost:4000/api/v1/post", {
       method: "PUT",
       body: data,
       credentials: "include",
     });
-
     if (response.ok) {
       setRedirect(true);
     }
@@ -72,7 +69,7 @@ export default function EditPost() {
     setSummary(e.target.value);
   };
 
-  const handleFilesChange = (e) => {
+  const handlefiles = (e) => {
     setFiles(e.target.files);
   };
 
@@ -81,7 +78,7 @@ export default function EditPost() {
   };
 
   if (redirect) {
-    return <Navigate to={`/post/${id}`} />;
+    return <Navigate to={"/post/" + id} />;
   }
 
   return (
@@ -108,7 +105,7 @@ export default function EditPost() {
         />
         <br />
         <input
-          onChange={handleFilesChange}
+          onChange={handlefiles}
           className="w-full mt-5 p-2 rounded-md border border-gray-300"
           type="file"
         />

@@ -74,13 +74,12 @@ export default function PostPage() {
           alt={postInfo.title}
         />
         {/* Summary */}
-       
+
         <p className="text-gray-600 mb-4 mt-4 px-2">{postInfo.summary}</p>
         {/* Content */}
         <div className="prose max-w-full text-gray-800 mt-4 px-2">
           <div dangerouslySetInnerHTML={{ __html: postInfo.content }} />
         </div>
-        
       </div>
     </div>
   );

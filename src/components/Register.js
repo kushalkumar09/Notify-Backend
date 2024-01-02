@@ -36,7 +36,7 @@ const Register = () => {
         <h2 className="mt-5 md:mt-2 mb-6 font-bold uppercase flex justify-center">
           Register Here
         </h2>
-        <label className="block mb-4">
+        <label className="mb-6">
           Username:
           <input
             className="p-1 rounded-md w-full"
@@ -46,7 +46,7 @@ const Register = () => {
             onChange={(e) => setUsername(e.target.value)}
           />
         </label>
-        <label className="block mb-4">
+        <label className="mb-6">
           Password:
           <input
             className="p-1 rounded-md w-full"
