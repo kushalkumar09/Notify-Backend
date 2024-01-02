@@ -1,5 +1,6 @@
 import { Outlet} from "react-router";
 import Header from "./Nav";
+import Footer from "./Footer";
 
 export default function Layout() {
     return (
@@ -9,6 +10,8 @@ export default function Layout() {
         {/* Add some vertical spacing between the header and the content */}
 
         <Outlet />
+        <div className="mt-4"></div>
+        <Footer/>
       </main>
     );
 }

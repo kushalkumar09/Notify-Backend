@@ -5,8 +5,8 @@ import { UserContext } from "./UserContext";
 import { Link } from "react-router-dom";
 
 const Header = () => {
-  // const [username, setUsername] = useState(null);
   const { setUserInfo, userInfo } = useContext(UserContext);
+
   useEffect(() => {
     fetch("http://localhost:4000/api/v1/profile", {
       credentials: "include",
@@ -28,54 +28,55 @@ const Header = () => {
   const username = userInfo?.username;
 
   return (
-    <header className="header md:px-6 py-4 bg-zinc-900 sticky w-full top-0 z-50">
-      <div className="container mx-auto flex items-center justify-between">
+    <header className="bg-white shadow-md sticky top-0 z-50">
+      <div className="container mx-auto flex items-center justify-between p-4">
         <div className="logo-container ml-4">
-          {/* <Logo /> */}
-          <Link to="/" className="text-white text-2xl font-bold">
-            Notify
+          <Link to="/" className="text-2xl font-bold text-gray-800">
+            <span className=" font-Long text-4xl">Notify</span>
           </Link>
         </div>
-        <nav className="hidden md:block">
-          {" "}
-          {/* Hide on small screens */}
+        <nav className="hidden md:flex items-center space-x-4">
           {username ? (
-            <ul className="flex items-center space-x-4">
-              <li>
-                <Link to="/create" className="nav-link">
-                  Create Post
-                </Link>
-              </li>
-              <li>
-                <Link to="/" className="nav-link text-gray-300">
-                  {username}
-                </Link>
-              </li>
-              <li>
-                <Link to="/" className="nav-link" onClick={logout}>
-                  Logout
-                </Link>
-              </li>
-            </ul>
+            <>
+              <Link
+                to="/create"
+                className="text-gray-800 hover:text-blue-500 transition duration-300 ease-in-out"
+              >
+                Create Post
+              </Link>
+              <Link
+                to="/"
+                className="text-gray-800 hover:text-blue-500 transition duration-300 ease-in-out"
+              >
+                {username}
+              </Link>
+              <Link
+                to="/"
+                className="text-gray-800 hover:text-blue-500 transition duration-300 ease-in-out"
+                onClick={logout}
+              >
+                Logout
+              </Link>
+            </>
           ) : (
-            <ul className="flex items-center space-x-4">
-              <li>
-                <Link to="/register" className="nav-link">
-                  Register
-                </Link>
-              </li>
-              <li>
-                <Link to="/login" className="nav-link text-gray-300">
-                  Login
-                </Link>
-              </li>
-            </ul>
+            <>
+              <Link
+                to="/register"
+                className="text-gray-800 hover:text-blue-500 transition duration-300 ease-in-out"
+              >
+                Register
+              </Link>
+              <Link
+                to="/login"
+                className="text-gray-800 hover:text-blue-500 transition duration-300 ease-in-out"
+              >
+                Login
+              </Link>
+            </>
           )}
         </nav>
-        {/* Add a responsive menu icon for small screens */}
         <div className="block md:hidden">
-          <button className="text-white focus:outline-none">
-            {/* Add a responsive menu icon (e.g., a hamburger icon) */}
+          <button className="text-gray-800 focus:outline-none">
             <svg
               className="h-6 w-6 fill-current"
               xmlns="http://www.w3.org/2000/svg"

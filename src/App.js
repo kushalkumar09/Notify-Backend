@@ -1,5 +1,5 @@
 // import logo from './logo.svg';
-// import './App.css';
+import './App.css';
 // import Post from "./components/Post";
 // import Header from "./components/Nav";
 import { Routes, Route } from "react-router-dom";

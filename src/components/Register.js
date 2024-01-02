@@ -1,54 +1,42 @@
 import React, { useState } from "react";
 import { Navigate } from "react-router";
-// import Post from "./Post";
 
 const Register = () => {
-  // Local state to manage form inputs
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [redirect, setRedirect] = useState(false);
 
-  //   // Function to handle form submission
-  const handleRegister =async(e) => {
-      e.preventDefault();
-      const userReg = await fetch("http://localhost:4000/api/v1/register", {
-          method: 'Post',
-          body:JSON.stringify({username, password}),
-          headers: { 'Content-Type': 'application/json' },
+  const handleRegister = async (e) => {
+    e.preventDefault();
 
-      })
-    console.log(userReg);
-      
+    const userReg = await fetch("http://localhost:4000/api/v1/register", {
+      method: "POST",
+      body: JSON.stringify({ username, password }),
+      headers: { "Content-Type": "application/json" },
+    });
 
-    // Validate login (you might want to perform actual authentication here)
-    
-
-    if ((username && password) && userReg.ok) {
-        setRedirect(true);
-        alert(`registration successful`);
-        
-      // You can perform additional logic here, such as making an API request for authentication
+    if (username && password && userReg.ok) {
+      setRedirect(true);
+      alert("Registration successful");
     } else {
       alert("Username taken or invalid");
     }
   };
 
   if (redirect) {
-    return (
-        <Navigate to="/"/>
-    )
+    return <Navigate to="/" />;
   }
 
   return (
-    <div className="w-full md:h-fit h-screeen flex justify-center p-10">
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <form
         onSubmit={handleRegister}
-        className=" bg-slate-50 md:w-1/3 md:h-auto md:p-7 p-6 max-h-screen rounded-md flex flex-col"
+        className="bg-slate-50 w-full md:w-1/3 p-7 rounded-md flex flex-col"
       >
         <h2 className="mt-5 md:mt-2 mb-6 font-bold uppercase flex justify-center">
           Register Here
         </h2>
-        <label>
+        <label className="block mb-4">
           Username:
           <input
             className="p-1 rounded-md w-full"
@@ -58,23 +46,19 @@ const Register = () => {
             onChange={(e) => setUsername(e.target.value)}
           />
         </label>
-        {/* {username} */}
-        <br />
-        <label>
+        <label className="block mb-4">
           Password:
           <input
             className="p-1 rounded-md w-full"
             type="password"
             value={password}
-            placeholder="password"
+            placeholder="Password"
             onChange={(e) => setPassword(e.target.value)}
           />
         </label>
-        {/* {password} */}
-        <br />
         <button
           type="submit"
-          className="flex md:mb-3 items-center justify-center font-medium bg-slate-700 text-white h-9 rounded-md hover:bg-slate-800 transition-all duration-300"
+          className="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 transition-all duration-300"
         >
           Register
         </button>

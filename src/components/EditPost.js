@@ -8,51 +8,21 @@ export default function EditPost() {
   const [title, setTitle] = useState("");
   const [summary, setSummary] = useState("");
   const [content, setContent] = useState("");
-  const [files, setFiles] = useState('');
+  const [files, setFiles] = useState(null); // Use null for file state
   const [redirect, setRedirect] = useState(false);
-  // const [cover, setCover] = useState("");
 
   useEffect(() => {
-
-    fetch(`http://localhost:4000/post/${id}`).then(response => {
-      response.json().then(postInfo => {
+    fetch(`http://localhost:4000/post/${id}`)
+      .then((response) => response.json())
+      .then((postInfo) => {
         setTitle(postInfo.title);
         setContent(postInfo.content);
         setSummary(postInfo.summary);
-      })
-    })
-    // const fetchPost = async () => {
-    //   try {
-    //     // Send a GET request to the server to fetch post data
-    //     const response = await fetch(`http://localhost:4000/post/${id}`);
-    //     console.log(id);
-
-    //     // Check if the response is OK (status code 200-299)
-    //     if (!response.ok) {
-    //       // If not OK, throw an error with the HTTP status
-    //       throw new Error(`HTTP error! Status: ${response.status}`);
-    //     }
-
-    //     // Parse the response body as JSON
-    //     const postInfo = await response.json();
-    //     console.log(postInfo);
-
-    //     // Set state with the fetched post data
-    //     setTitle(postInfo.title);
-    //     setSummary(postInfo.summary);
-    //     setContent(postInfo.content);
-    //     setFile(postInfo.file);
-    //   } catch (error) {
-    //     // Handle any errors that occurred during the fetch
-    //     console.error("Error fetching post:", error);
-    //   }
-    // };
-
-    // // Call the fetchPost function when the component mounts or when id changes
-    // fetchPost();
+      });
   }, [id]);
 
   const modules = {
+    // ... your existing modules configuration
     toolbar: [
       ["bold", "italic", "underline", "strike"],
       ["blockquote", "code-block"],
@@ -74,21 +44,22 @@ export default function EditPost() {
   async function updatePost(e) {
     e.preventDefault();
     const data = new FormData();
-    data.set('title',title);
-    data.set('summary',summary);
-    data.set('content', content);
-    data.set('id',id);
-    if (files?.[0]) {
-      
-      data.set('file',files?.[0]);
+    data.set("title", title);
+    data.set("summary", summary);
+    data.set("content", content);
+    data.set("id", id);
+
+    if (files && files[0]) {
+      data.set("file", files[0]);
     }
-    const response = await fetch('http://localhost:4000/api/v1/post', {
-      method: 'PUT',
+
+    const response = await fetch("http://localhost:4000/api/v1/post", {
+      method: "PUT",
       body: data,
-      credentials:"include",
-    })
+      credentials: "include",
+    });
+
     if (response.ok) {
-      
       setRedirect(true);
     }
   }
@@ -101,18 +72,16 @@ export default function EditPost() {
     setSummary(e.target.value);
   };
 
-   const handlefiles = (e) => {
-     setFiles(e.target.files);
-   };
+  const handleFilesChange = (e) => {
+    setFiles(e.target.files);
+  };
 
   const handleContentChange = (value) => {
     setContent(value);
   };
 
-  
-
   if (redirect) {
-    return <Navigate to={"/post/"+id} />;
+    return <Navigate to={`/post/${id}`} />;
   }
 
   return (
@@ -139,7 +108,7 @@ export default function EditPost() {
         />
         <br />
         <input
-          onChange={handlefiles}
+          onChange={handleFilesChange}
           className="w-full mt-5 p-2 rounded-md border border-gray-300"
           type="file"
         />
