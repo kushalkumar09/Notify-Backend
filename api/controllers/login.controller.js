@@ -2,7 +2,14 @@ const User = require("../models/user.model");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-const secret = "lkdjfah807jdlfk89hjkdsjfb";
+const secret = process.env.JWT_SECRET || "your-default-secret";
+const expiresIn = "1h";
+
+const generateToken = (user) => {
+  return jwt.sign({ username: user.username, id: user._id }, secret, {
+    expiresIn,
+  });
+};
 
 const login = async (req, res) => {
   try {
@@ -10,7 +17,7 @@ const login = async (req, res) => {
     const user = await User.findOne({ username });
 
     if (user && bcrypt.compareSync(password, user.password)) {
-      const token = await jwt.sign({ username, id: user._id }, secret, {});
+      const token = generateToken(user);
       res
         .cookie("token", token, { httpOnly: true })
         .json({ id: user._id, username });
@@ -21,7 +28,7 @@ const login = async (req, res) => {
       });
     }
   } catch (error) {
-    console.error(error);
+    console.error("Error in login:", error);
     res.status(500).json({
       success: false,
       message: "Something went wrong in the login attempt",
@@ -32,11 +39,11 @@ const login = async (req, res) => {
 const profile = async (req, res) => {
   try {
     const { token } = req.cookies;
-    const info = await jwt.verify(token, secret, {});
+    const info = await jwt.verify(token, secret);
     res.json(info);
   } catch (error) {
-    console.error(error);
-    res.status(401).json({ error: "Unauthorized" });
+    console.error("Error in profile:", error);
+    res.status(401).json({ error: "Unauthorized. Invalid or expired token." });
   }
 };
 
