@@ -37,8 +37,6 @@ const creatingPost = async (req, res) => {
 };
 
 const updatingPost = async (req, res) => {
- 
-
   // Respond with the updated post data
   // res.json({ reult: 4, fileis: req.file })
   let newPath = null;
@@ -52,26 +50,24 @@ const updatingPost = async (req, res) => {
   const { token } = req.cookies;
   jwt.verify(token, secret, async (err, info) => {
     if (err) throw err;
-    
-    const {id,title, summary, content } = req.body;
+
+    const { id, title, summary, content } = req.body;
     const postDoc = await Post.findById(id);
     const isAuthor = JSON.stringify(postDoc.author) === JSON.stringify(info.id);
     // res.json({ idAuthors: isAuthor });
     if (!isAuthor) {
-      return res.status(400).json('You are not the author');
-      
+      return res.status(400).json("You are not the author");
     }
 
     await postDoc.updateOne({
       title,
       summary,
       content,
-      cover: newPath?newPath:postDoc.cover,
-    })
+      cover: newPath ? newPath : postDoc.cover,
+    });
 
     res.json(postDoc);
   });
-  
 };
 
 module.exports = { creatingPost, updatingPost };
