@@ -40,7 +40,7 @@ const Header = () => {
             <>
               <Link
                 to="/create"
-                className="text-gray-800 hover:text-blue-500 transition duration-300 ease-in-out"
+                className="text-white bg-gradient-to-r from-green-400 to-green-600 hover:from-green-600 hover:to-green-800 focus:outline-none focus:ring focus:border-blue-300 transition duration-300 ease-in-out py-2 px-3 rounded-full shadow-md"
               >
                 Create Post
               </Link>
